@@ -62,11 +62,5 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "repositories": [
-        {
-          "type": "vcs",
-          "url": "https://github.com/arquivei/laravel-prometheus-exporter"
-        }
-      ]
+    "prefer-stable": true
 }
