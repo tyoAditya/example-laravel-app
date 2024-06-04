@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MetricController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $registry = \Prometheus\CollectorRegistry::getDefault();
+    // getOrRegisterCounter(string $namespace, string $name, string $help, $labels = [])
+    // $counter = $registry->getOrRegisterCounter('test', 'some_counter', 'it increases', ['type']);
+    // $counter->incBy(3, ['blue']);
+
+    $counter = $registry->getOrRegisterCounter('namespace', 'request_count', '', ['code','method','url']);
+    $counter->incBy(1, ['200','GET', '/']);
+
     return ['Laravel' => app()->version()];
 });
+
+Route::get('/metrics', [MetricController::class, 'show']);
+
 
 require __DIR__.'/auth.php';
